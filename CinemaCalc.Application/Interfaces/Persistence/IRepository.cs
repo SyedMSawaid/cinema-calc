@@ -1,7 +1,7 @@
 
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace CinemaCalc.Application.Interfaces;
+namespace CinemaCalc.Application.Interfaces.Persistence;
 
 public interface IRepository<TEntity> : IDisposable where TEntity : class
 {

@@ -1,9 +1,8 @@
-using System;
 using CinemaCalc.Domain.Entities;
-using CinemaCalc.EntityFramework.Configurations;
+using CinemaCalc.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 
-namespace CinemaCalc.EntityFramework.Data;
+namespace CinemaCalc.Persistence.Data;
 
 public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
 {
@@ -14,5 +13,10 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
         base.OnModelCreating(modelBuilder);
 
         CommonConfiguration.ApplyConfigurations(modelBuilder);
+    }
+    
+    public void InitializeDatabase()
+    {
+        Database.EnsureCreated();  // This creates the database and schema
     }
 }

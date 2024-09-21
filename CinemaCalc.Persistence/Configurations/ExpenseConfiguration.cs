@@ -3,7 +3,7 @@ using CinemaCalc.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CinemaCalc.EntityFramework.Configurations;
+namespace CinemaCalc.Persistence.Configurations;
 
 public class ExpenseConfiguration : IEntityTypeConfiguration<Expense>
 {

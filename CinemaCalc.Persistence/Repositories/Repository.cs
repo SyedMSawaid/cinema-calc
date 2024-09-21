@@ -1,9 +1,8 @@
-using System;
-using CinemaCalc.Application.Interfaces;
-using CinemaCalc.EntityFramework.Data;
+using CinemaCalc.Application.Interfaces.Persistence;
+using CinemaCalc.Persistence.Data;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace CinemaCalc.EntityFramework.Repositories;
+namespace CinemaCalc.Persistence.Repositories;
 
 public abstract class Repository<TEntity>(ApplicationDbContext applicationDbContext) : IRepository<TEntity> where TEntity : class
 {

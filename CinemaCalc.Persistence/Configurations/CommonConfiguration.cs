@@ -1,7 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace CinemaCalc.EntityFramework.Configurations;
+namespace CinemaCalc.Persistence.Configurations;
 
 public static class CommonConfiguration
 {

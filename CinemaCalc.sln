@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaCalc.Domain", "Cinema
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaCalc.Application", "CinemaCalc.Application\CinemaCalc.Application.csproj", "{FE804DE2-6819-4C4D-9173-5192777E1FCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaCalc.EntityFramework", "CinemaCalc.EntityFramework\CinemaCalc.EntityFramework.csproj", "{594DCD1A-4750-41A6-99E8-F013C95D35C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaCalc.Persistence", "CinemaCalc.Persistence\CinemaCalc.Persistence.csproj", "{D58919C7-288E-488E-9B51-D8D4DCA63110}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,9 +32,9 @@ Global
 		{FE804DE2-6819-4C4D-9173-5192777E1FCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE804DE2-6819-4C4D-9173-5192777E1FCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE804DE2-6819-4C4D-9173-5192777E1FCC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{594DCD1A-4750-41A6-99E8-F013C95D35C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{594DCD1A-4750-41A6-99E8-F013C95D35C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{594DCD1A-4750-41A6-99E8-F013C95D35C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{594DCD1A-4750-41A6-99E8-F013C95D35C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D58919C7-288E-488E-9B51-D8D4DCA63110}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D58919C7-288E-488E-9B51-D8D4DCA63110}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D58919C7-288E-488E-9B51-D8D4DCA63110}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D58919C7-288E-488E-9B51-D8D4DCA63110}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
