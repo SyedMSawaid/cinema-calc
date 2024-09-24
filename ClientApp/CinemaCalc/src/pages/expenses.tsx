@@ -1,50 +1,85 @@
-import { useCallback, useEffect, useState } from "react";
 import { Expense } from "../models";
 import { Button, ExpenseRow } from "../components";
 import { ExpenseService } from "../services";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-const Expenses = () => {
-  const [expenses, setExpenses] = useState<Expense[]>([]);
+export const Expenses = () => {
+  const queryClient = useQueryClient();
 
-  const fetchData = useCallback(async () => {
-    const expenses = await ExpenseService.getAll();
-    setExpenses(expenses);
-  }, []);
+  const query = useQuery({
+    queryKey: ["expenses"],
+    queryFn: ExpenseService.getAll,
+  });
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  const onErrorHandler = () => (_error, _expense, context) =>
+    queryClient.setQueryData(["expenses"], context?.previousExpenses);
+  const onSettledHandler = () =>
+    queryClient.invalidateQueries({ queryKey: ["expenses"] });
+
+  const getPreviousExpenses = async () => {
+    await queryClient.cancelQueries({ queryKey: ["expenses"] });
+    return queryClient.getQueryData<Expense[]>(["expenses"]);
+  };
+
+  const createMutation = useMutation({
+    mutationFn: ExpenseService.create,
+    onMutate: async (newExpense) => {
+      const previousExpenses = await getPreviousExpenses();
+      queryClient.setQueryData(["expenses"], (oldExpenses: Expense[]) => [
+        ...(oldExpenses ?? []),
+        newExpense,
+      ]);
+      return { previousExpenses };
+    },
+    onError: onErrorHandler,
+    onSettled: onSettledHandler,
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ExpenseService.update,
+    onMutate: async (updatedExpense) => {
+      const previousExpenses = await getPreviousExpenses();
+
+      queryClient.setQueryData(["expenses"], (oldExpenses: Expense[]) =>
+        oldExpenses?.map((expense) =>
+          expense.id === updatedExpense.id ? updatedExpense : expense
+        )
+      );
+
+      return { previousExpenses };
+    },
+    onError: onErrorHandler,
+    onSettled: onSettledHandler,
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: ExpenseService.delete,
+    onMutate: async (id) => {
+      const previousExpenses = getPreviousExpenses();
+
+      queryClient.setQueryData(["expenses"], (oldExpense: Expense[]) =>
+        oldExpense?.filter((expense) => expense.id !== id)
+      );
+
+      return { previousExpenses };
+    },
+    onError: onErrorHandler,
+    onSettled: onSettledHandler,
+  });
 
   const addExpense = async () => {
-    const newExpense = {
+    const expense = {
       id: Date.now(),
-      name: `Expense ${expenses.length + 1}`,
+      name: `Expense ${(query?.data?.length ?? 0) + 1}`,
       percentageMarkup: 0,
       price: 0,
       total: 0,
     } as Expense;
 
-    setExpenses([...expenses, newExpense]);
-    const expense = await ExpenseService.create(newExpense);
-    const filtered = expenses.filter((x) => x.id !== newExpense.id);
-
-    setExpenses([...filtered, expense]);
+    createMutation.mutate(expense);
   };
 
-  const updateExpense = async (data: Expense) => {
-    const updatedExpensesList = expenses.map((x) =>
-      x.id === data.id ? data : x
-    );
-    setExpenses(updatedExpensesList);
-
-    await ExpenseService.update(data.id, data);
-  };
-
-  const deleteExpense = async (id: number) => {
-    const filtered = expenses.filter((x) => x.id !== id);
-    setExpenses(filtered);
-    ExpenseService.delete(id);
-  };
+  // TODO: Handle loading data and when screen is empty
 
   return (
     <>
@@ -65,12 +100,12 @@ const Expenses = () => {
               <div className="w-6"></div>
               <div></div>
             </div>
-            {expenses.map((expense) => (
+            {query?.data?.map((expense) => (
               <ExpenseRow
                 key={expense.id}
                 expense={expense}
-                onDelete={deleteExpense}
-                onBlur={updateExpense}
+                onDelete={(id) => deleteMutation.mutate(id)}
+                onBlur={(data) => updateMutation.mutate(data)}
               />
             ))}
           </div>
@@ -81,5 +116,3 @@ const Expenses = () => {
     </>
   );
 };
-
-export default Expenses;

@@ -1,11 +1,12 @@
 using CinemaCalc.Application.Interfaces.Persistence;
+using CinemaCalc.Domain.Entities;
 using CinemaCalc.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace CinemaCalc.Persistence.Repositories;
 
-public abstract class Repository<TEntity>(ApplicationDbContext applicationDbContext) : IRepository<TEntity> where TEntity : class
+public abstract class Repository<TEntity>(ApplicationDbContext applicationDbContext) : IRepository<TEntity> where TEntity : BaseEntity
 {
     private readonly ApplicationDbContext _applicationDbContext = applicationDbContext;
 
@@ -42,6 +43,6 @@ public abstract class Repository<TEntity>(ApplicationDbContext applicationDbCont
 
     public Task<List<TEntity>> GetAll()
     {
-        return _applicationDbContext.Set<TEntity>().ToListAsync();
+        return _applicationDbContext.Set<TEntity>().OrderBy(x => x.Id).ToListAsync();
     }
 }

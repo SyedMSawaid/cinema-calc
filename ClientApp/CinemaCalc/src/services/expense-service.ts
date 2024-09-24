@@ -6,6 +6,6 @@ export const ExpenseService = {
   getById: (id: number) => httpClient.get<Expense>(`/Expense/${id}`),
   create: (data: Expense) => httpClient.post<Expense>("/Expense", data),
   delete: (id: number) => httpClient.delete<Expense>(`/Expense/${id}`),
-  update: (id: number, data: Expense) =>
-    httpClient.put<Expense>(`/Expense/${id}`, data),
+  update: (data: Expense) =>
+    httpClient.put<Expense>(`/Expense/${data.id}`, data),
 };
