@@ -3,5 +3,5 @@ export type Expense = {
   name: string;
   price: number;
   percentageMarkup: number;
-  totalPrice: number;
+  total: number;
 };

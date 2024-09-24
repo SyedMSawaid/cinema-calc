@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Expense } from "../models";
 import { Button, ExpenseRow } from "../components";
+import httpClient from "../infra/http-client";
 
 const Expenses = () => {
   const [expenses, setExpenses] = useState<Expense[]>([
@@ -9,25 +10,48 @@ const Expenses = () => {
       name: "Hi",
       price: 900,
       percentageMarkup: 0.25,
-      totalPrice: 899,
+      total: 899,
     },
   ]);
 
-  const addExpense = () => {
+  const fetchData = useCallback(async () => {
+    const expenses = await httpClient.get<Expense[]>("/Expense");
+    setExpenses(expenses);
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const addExpense = async () => {
     const newExpense = {
       id: Date.now().toString(),
       name: `Expense ${expenses.length + 1}`,
       percentageMarkup: 0,
       price: 0,
-      totalPrice: 0,
+      total: 0,
     } as Expense;
 
     setExpenses([...expenses, newExpense]);
+    const expense = await httpClient.post<Expense>("/Expense", newExpense);
+    const filtered = expenses.filter((x) => x.id !== newExpense.id);
+
+    setExpenses([...filtered, expense]);
   };
 
-  const deleteExpense = (id: string) => {
+  const updateExpense = async (data: Expense) => {
+    const updatedExpensesList = expenses.map((x) =>
+      x.id === data.id ? data : x
+    );
+    setExpenses(updatedExpensesList);
+
+    await httpClient.put<Expense>(`Expense/${data.id}`, data);
+  };
+
+  const deleteExpense = async (id: string) => {
     const filtered = expenses.filter((x) => x.id !== id);
     setExpenses(filtered);
+    await httpClient.delete(`/Expense/${id}`);
   };
 
   return (
@@ -46,12 +70,14 @@ const Expenses = () => {
               <div className="w-1/4">Price</div>
               <div className="w-1/4">Markup (%)</div>
               <div className="w-1/4">Total</div>
+              <div></div>
             </div>
             {expenses.map((expense) => (
               <ExpenseRow
                 key={expense.id}
                 expense={expense}
                 onDelete={deleteExpense}
+                onBlur={updateExpense}
               />
             ))}
           </div>

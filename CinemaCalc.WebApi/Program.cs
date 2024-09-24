@@ -25,6 +25,8 @@ public class Program
             cfg.RegisterServicesFromAssemblyContaining<GetAllExpensesCommand>());
         builder.Services.AddAutoMapper(typeof(ExpenseMappers));
 
+        builder.Services.AddCors();
+
         builder.Services.AddControllers();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -43,6 +45,8 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
+
+        app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
         app.MapControllers();
 
