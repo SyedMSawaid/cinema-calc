@@ -4,7 +4,7 @@ import { ChangeEvent, FocusEvent, useState } from "react";
 
 interface Props {
   expense: Expense;
-  onDelete: (id: string) => void;
+  onDelete: (id: number) => void;
   onBlur: (data: Expense) => void;
 }
 
@@ -68,7 +68,7 @@ export const ExpenseRow = ({
         <div className="w-1/4">{expense.total}</div>
 
         <div
-          className="bg-red-500 rounded-full px-1.5"
+          className="bg-red-500 rounded-full px-1.5 w-6"
           onClick={() => onDelete(expense.id)}
         >
           X

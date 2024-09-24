@@ -1,21 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { Expense } from "../models";
 import { Button, ExpenseRow } from "../components";
-import httpClient from "../infra/http-client";
+import { ExpenseService } from "../services";
 
 const Expenses = () => {
-  const [expenses, setExpenses] = useState<Expense[]>([
-    {
-      id: "1",
-      name: "Hi",
-      price: 900,
-      percentageMarkup: 0.25,
-      total: 899,
-    },
-  ]);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
 
   const fetchData = useCallback(async () => {
-    const expenses = await httpClient.get<Expense[]>("/Expense");
+    const expenses = await ExpenseService.getAll();
     setExpenses(expenses);
   }, []);
 
@@ -25,7 +17,7 @@ const Expenses = () => {
 
   const addExpense = async () => {
     const newExpense = {
-      id: Date.now().toString(),
+      id: Date.now(),
       name: `Expense ${expenses.length + 1}`,
       percentageMarkup: 0,
       price: 0,
@@ -33,7 +25,7 @@ const Expenses = () => {
     } as Expense;
 
     setExpenses([...expenses, newExpense]);
-    const expense = await httpClient.post<Expense>("/Expense", newExpense);
+    const expense = await ExpenseService.create(newExpense);
     const filtered = expenses.filter((x) => x.id !== newExpense.id);
 
     setExpenses([...filtered, expense]);
@@ -45,13 +37,13 @@ const Expenses = () => {
     );
     setExpenses(updatedExpensesList);
 
-    await httpClient.put<Expense>(`Expense/${data.id}`, data);
+    await ExpenseService.update(data.id, data);
   };
 
-  const deleteExpense = async (id: string) => {
+  const deleteExpense = async (id: number) => {
     const filtered = expenses.filter((x) => x.id !== id);
     setExpenses(filtered);
-    await httpClient.delete(`/Expense/${id}`);
+    ExpenseService.delete(id);
   };
 
   return (
@@ -70,6 +62,7 @@ const Expenses = () => {
               <div className="w-1/4">Price</div>
               <div className="w-1/4">Markup (%)</div>
               <div className="w-1/4">Total</div>
+              <div className="w-6"></div>
               <div></div>
             </div>
             {expenses.map((expense) => (
@@ -81,6 +74,8 @@ const Expenses = () => {
               />
             ))}
           </div>
+
+          <div className="place-self-end">Total Value: 420</div>
         </div>
       </div>
     </>
