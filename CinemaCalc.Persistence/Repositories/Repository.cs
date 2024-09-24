@@ -1,5 +1,6 @@
 using CinemaCalc.Application.Interfaces.Persistence;
 using CinemaCalc.Persistence.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace CinemaCalc.Persistence.Repositories;
@@ -39,8 +40,8 @@ public abstract class Repository<TEntity>(ApplicationDbContext applicationDbCont
         _applicationDbContext.Set<TEntity>().Remove(entity);
     }
 
-    ValueTask<EntityEntry<TEntity>> IRepository<TEntity>.AddAsync(TEntity entity)
+    public Task<List<TEntity>> GetAll()
     {
-        throw new NotImplementedException();
+        return _applicationDbContext.Set<TEntity>().ToListAsync();
     }
 }
