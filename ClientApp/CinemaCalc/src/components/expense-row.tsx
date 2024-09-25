@@ -43,29 +43,36 @@ export const ExpenseRow = ({
         <Input
           type="text"
           name="name"
+          label="Name"
           className="w-1/4"
           value={expense.name}
           onChange={handleChange}
           onBlur={handleBlur}
         />
         <Input
+          id="percentageMarkup"
           type="number"
           name="percentageMarkup"
+          label="Markup"
           className="w-1/4"
           value={expense.percentageMarkup}
           onChange={handleChange}
           onBlur={handleBlur}
+          unit="%"
         />
         <Input
+          id="price"
           type="number"
           name="price"
+          label="Price"
           className="w-1/4"
           value={expense.price}
           onChange={handleChange}
           onBlur={handleBlur}
+          unit="€"
         />
 
-        <div className="w-1/4">{expense.total}</div>
+        <div className="w-1/4 text-right">{expense.total} €</div>
 
         <div
           className="bg-red-500 rounded-full px-1.5 w-6"
