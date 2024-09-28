@@ -1,6 +1,6 @@
-import { httpClient } from "../infra";
-import { Expense } from "../data/models";
 import { GetAllExpensesResponse } from "../data/dtos";
+import { Expense } from "../data/models";
+import { httpClient } from "../infra";
 
 export const ExpenseService = {
   getAll: () => httpClient.get<GetAllExpensesResponse>("/Expense"),

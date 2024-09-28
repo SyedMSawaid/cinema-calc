@@ -1,9 +1,9 @@
-import { Expense } from "../data/models/expense";
-import { Input } from ".";
-import { ChangeEvent, FocusEvent, useEffect, useState } from "react";
 import Decimal from "decimal.js";
-import { isValidNumber } from "../helpers";
 import { TrashIcon } from "lucide-react";
+import { ChangeEvent, FocusEvent, useEffect, useState } from "react";
+import { Input } from ".";
+import { Expense } from "../data/models";
+import { isValidNumber } from "../helpers";
 
 interface Props {
   expense: Expense;
@@ -48,13 +48,9 @@ export const ExpenseRow = ({
 
       onBlur({
         ...expense,
-        price: new Decimal(
-          expense.price.toString().trim() == "" ? "0" : expense.price
-        ),
+        price: new Decimal(expense.price.toString().trim() || "0"),
         percentageMarkup: new Decimal(
-          expense.percentageMarkup.toString().trim() == ""
-            ? "0"
-            : expense.percentageMarkup
+          expense.percentageMarkup.toString().trim() || "0"
         ),
       });
     }
