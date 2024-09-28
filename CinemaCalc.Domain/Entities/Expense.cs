@@ -1,5 +1,3 @@
-using System;
-
 namespace CinemaCalc.Domain.Entities;
 
 public class Expense : BaseEntity
@@ -16,7 +14,7 @@ public class Expense : BaseEntity
             Name = name,
             Price = price,
             PercentageMarkup = percentageMarkup,
-            Total = percentageMarkup * price // TODO: Fix this
+            Total = ((percentageMarkup / 100) * price) + price
         };
     }
 }

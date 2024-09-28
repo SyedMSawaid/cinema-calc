@@ -2,7 +2,7 @@ using MediatR;
 
 namespace CinemaCalc.Application.Expenses.Queries.GetAllExpenses;
 
-public class GetAllExpensesCommand : IRequest<List<ExpenseDto>>
+public class GetAllExpensesCommand : IRequest<GetAllExpensesResponse>
 {
     
 }

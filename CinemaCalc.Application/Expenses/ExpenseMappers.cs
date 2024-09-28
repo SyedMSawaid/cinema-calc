@@ -8,7 +8,9 @@ public class ExpenseMappers : Profile
 {
     public ExpenseMappers()
     {
-        CreateMap<ExpenseDto, Expense>().ReverseMap();
-        CreateMap<NewExpenseDto, Expense>().ReverseMap();
+        CreateMap<Expense, ExpenseDto>()
+            .ReverseMap();
+        CreateMap<NewExpenseDto, Expense>()
+            .ForMember(dest => dest.Total, opt => opt.MapFrom(src => src.PercentageMarkup / 100 * src.Price + src.Price));
     }
 }
