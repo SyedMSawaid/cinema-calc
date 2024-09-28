@@ -6,7 +6,7 @@ export const Button = ({ children, onClick, ...props }: Props) => {
   return (
     <button
       {...props}
-      className="px-4 py-2 bg-green-400 max-w-40"
+      className="px-4 py-2 bg-green-400 rounded-full max-w-40"
       onClick={onClick}
     >
       {children}

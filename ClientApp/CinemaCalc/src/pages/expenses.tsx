@@ -1,9 +1,10 @@
 import { Expense } from "../data/models";
-import { Button, ExpenseRow } from "../components";
+import { ExpenseRow } from "../components";
 import { ExpenseService } from "../services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { GetAllExpensesResponse } from "../data/dtos";
 import Decimal from "decimal.js";
+import { Button } from "../components";
 
 export const Expenses = () => {
   const queryClient = useQueryClient();
@@ -95,38 +96,47 @@ export const Expenses = () => {
     createMutation.mutate(expense);
   };
 
-  // TODO: Handle loading data and when screen is empty
-
   return (
     <>
       <div className="flex items-center justify-center w-full h-full">
-        <div className="flex flex-col py-10 gap-y-12">
-          <div className="flex flex-col items-center justify-center gap-y-4">
-            <h1 className="text-2xl font-bold text-center">Cinema Calc</h1>
+        <div className="flex flex-col max-w-screen-lg py-10 gap-y-12 grow">
+          <div className="px-2 pb-56 bg-white shadow-2xl md:px-10 rounded-xl">
+            <div className="flex flex-col items-center justify-center py-16 gap-y-4">
+              <h1 className="text-2xl font-bold text-center">Cinema Calc</h1>
 
-            <Button onClick={addExpense}>Add new Point</Button>
-          </div>
-
-          <div className="flex flex-col gap-y-4">
-            <div className="hidden grid-cols-5 gap-4 sm:grid">
-              <div className="text-center">Name</div>
-              <div className="text-center">Price</div>
-              <div className="text-center">Markup</div>
-              <div className="text-center">Total</div>
-              <div className=""></div>
+              <Button onClick={addExpense}>Add new Point</Button>
             </div>
-            {query?.data?.expenses?.map((expense) => (
-              <ExpenseRow
-                key={expense.id}
-                expense={expense}
-                onDelete={(id) => deleteMutation.mutate(id)}
-                onBlur={(data) => updateMutation.mutate(data)}
-              />
-            ))}
-          </div>
 
-          <div className="text-sm place-self-end sm:text-base">
-            Grand Total: {query?.data?.total?.toFixed(2)} €
+            <div className="flex flex-col py-10 border-gray-200 border-dashed gap-y-4 border-y">
+              {!query?.data?.expenses?.length ? (
+                <div className="text-sm text-center text-gray-400 md:text-base">
+                  No points added yet! Click on the top button to add some.
+                </div>
+              ) : (
+                <>
+                  <div className="hidden grid-cols-6 gap-4 sm:grid">
+                    <div className="col-span-2 text-center">Name</div>
+                    <div className="text-center">Price</div>
+                    <div className="text-center">Markup</div>
+                    <div className="text-center">Total</div>
+                    <div className=""></div>
+                  </div>
+                  {query?.data?.expenses?.map((expense) => (
+                    <ExpenseRow
+                      key={expense.id}
+                      expense={expense}
+                      onDelete={(id) => deleteMutation.mutate(id)}
+                      onBlur={(data) => updateMutation.mutate(data)}
+                    />
+                  ))}
+                </>
+              )}
+            </div>
+
+            <div className="flex items-center justify-center py-10 text-sm sm:text-base gap-x-4">
+              <div className="text-6xl text-bold">&Sigma;</div>
+              <div className="text-3xl">{query?.data?.total?.toFixed(2)} €</div>
+            </div>
           </div>
         </div>
       </div>
