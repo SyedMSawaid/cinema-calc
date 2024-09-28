@@ -1,6 +1,6 @@
 using AutoMapper;
+using CinemaCalc.Application.Exceptions.Expenses;
 using CinemaCalc.Application.Interfaces.Persistence;
-using CinemaCalc.Domain.Entities;
 using MediatR;
 
 namespace CinemaCalc.Application.Expenses.Commands.UpdateExpense;
@@ -19,7 +19,9 @@ public class UpdateExpenseCommandHandler : IRequestHandler<UpdateExpenseCommand,
     public async Task<ExpenseDto> Handle(UpdateExpenseCommand request, CancellationToken cancellationToken)
     {
         var expense = await _unitOfWork.ExpenseRepository.GetById(request.Id);
-        // TODO: add not found.
+        
+        if (expense is null) 
+            throw new ExpenseNotFoundException(request.Id);
 
         _mapper.Map(request.Dto, expense);
         _unitOfWork.ExpenseRepository.Update(expense);

@@ -1,4 +1,5 @@
 using AutoMapper;
+using CinemaCalc.Application.Exceptions.Expenses;
 using CinemaCalc.Application.Interfaces.Persistence;
 using MediatR;
 
@@ -18,7 +19,9 @@ public class DeleteExpenseCommandHandler : IRequestHandler<DeleteExpenseCommand,
     public async Task<ExpenseDto> Handle(DeleteExpenseCommand request, CancellationToken cancellationToken)
     {
         var expense = await _unitOfWork.ExpenseRepository.GetById(request.Id);
-        // TODO: add error handling
+        
+        if (expense is null) 
+            throw new ExpenseNotFoundException(request.Id);
         
         _unitOfWork.ExpenseRepository.Remove(expense);
         await _unitOfWork.CompleteAsync();

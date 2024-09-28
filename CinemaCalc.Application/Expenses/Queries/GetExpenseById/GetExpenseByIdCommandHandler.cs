@@ -1,4 +1,5 @@
 using AutoMapper;
+using CinemaCalc.Application.Exceptions.Expenses;
 using CinemaCalc.Application.Interfaces.Persistence;
 using MediatR;
 
@@ -18,7 +19,10 @@ public class GetExpenseByIdCommandHandler : IRequestHandler<GetExpenseByIdComman
     public async Task<ExpenseDto> Handle(GetExpenseByIdCommand request, CancellationToken cancellationToken)
     {
         var expense = await _unitOfWork.ExpenseRepository.GetById(request.Id);
-        // TODO: add handler for not found.
+        
+        if (expense is null) 
+            throw new ExpenseNotFoundException(request.Id);
+        
         var expenseDto = _mapper.Map<ExpenseDto>(expense);
         return expenseDto;
     }

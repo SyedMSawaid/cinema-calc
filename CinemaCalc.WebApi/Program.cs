@@ -4,6 +4,7 @@ using CinemaCalc.Application.Interfaces.Persistence;
 using CinemaCalc.Persistence;
 using CinemaCalc.Persistence.Data;
 using CinemaCalc.Persistence.Repositories;
+using CinemaCalc.WebApi.Middlewares.ErrorHandling;
 using Microsoft.EntityFrameworkCore;
 
 namespace CinemaCalc.WebApi;
@@ -27,7 +28,7 @@ public class Program
 
         builder.Services.AddCors();
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers(options => options.Filters.Add(typeof(ApplicationExceptionFilterAttribute)));
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
