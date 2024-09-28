@@ -91,14 +91,13 @@ export const Expenses = () => {
             <Button onClick={addExpense}>Add new Point</Button>
           </div>
 
-          <div className="flex flex-col gap-y-2">
-            <div className="flex justify-between font-bold gap-x-8">
+          <div className="flex flex-col gap-y-4">
+            <div className="hidden grid-cols-5 gap-4 sm:grid">
               <div className="w-1/4">Name</div>
               <div className="w-1/4">Price</div>
-              <div className="w-1/4">Markup (%)</div>
+              <div className="w-1/4">Markup</div>
               <div className="w-1/4">Total</div>
-              <div className="w-6"></div>
-              <div></div>
+              <div className=""></div>
             </div>
             {query?.data?.map((expense) => (
               <ExpenseRow
@@ -110,7 +109,9 @@ export const Expenses = () => {
             ))}
           </div>
 
-          <div className="place-self-end">Total Value: 420</div>
+          <div className="text-sm place-self-end sm:text-base">
+            Total Value: 420
+          </div>
         </div>
       </div>
     </>

@@ -39,46 +39,52 @@ export const ExpenseRow = ({
 
   return (
     <>
-      <div className="flex gap-x-8">
+      <div className="grid grid-cols-5 gap-x-2 gap-y-2">
         <Input
           type="text"
           name="name"
           label="Name"
-          className="w-1/4"
+          containerClassName="col-span-5 sm:col-span-1"
           value={expense.name}
           onChange={handleChange}
           onBlur={handleBlur}
         />
-        <Input
-          id="percentageMarkup"
-          type="number"
-          name="percentageMarkup"
-          label="Markup"
-          className="w-1/4"
-          value={expense.percentageMarkup}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          unit="%"
-        />
+
         <Input
           id="price"
           type="number"
           name="price"
           label="Price"
-          className="w-1/4"
+          containerClassName="col-span-2 sm:col-span-1"
           value={expense.price}
           onChange={handleChange}
           onBlur={handleBlur}
           unit="€"
         />
 
-        <div className="w-1/4 text-right">{expense.total} €</div>
+        <Input
+          id="percentageMarkup"
+          type="number"
+          name="percentageMarkup"
+          label="Markup"
+          value={expense.percentageMarkup}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          unit="%"
+        />
 
-        <div
-          className="bg-red-500 rounded-full px-1.5 w-6"
-          onClick={() => onDelete(expense.id)}
-        >
-          X
+        <div className="flex flex-col items-center justify-around text-sm text-right sm:text-base">
+          <label className="text-xs sm:hidden">Total</label>
+          <div id="total">{expense.total} €</div>
+        </div>
+
+        <div className="flex items-center justify-center grow">
+          <div
+            className="bg-red-500 rounded-full px-1.5 h-6 w-6 items-center flex self-center justify-center"
+            onClick={() => onDelete(expense.id)}
+          >
+            X
+          </div>
         </div>
       </div>
     </>
