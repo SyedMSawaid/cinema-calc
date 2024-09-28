@@ -8,7 +8,7 @@ class HttpClient {
   constructor() {
     this.instance = axios.create({
       baseURL: BASE_URL,
-      timeout: 10000, // 10 seconds
+      timeout: 10000,
       headers: {
         "Content-Type": "application/json",
       },
@@ -45,5 +45,4 @@ class HttpClient {
   }
 }
 
-const httpClient = new HttpClient();
-export default httpClient;
+export const httpClient = new HttpClient();

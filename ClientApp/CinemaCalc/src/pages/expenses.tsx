@@ -1,7 +1,9 @@
-import { Expense } from "../models";
+import { Expense } from "../data/models";
 import { Button, ExpenseRow } from "../components";
 import { ExpenseService } from "../services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { GetAllExpensesResponse } from "../data/dtos";
+import Decimal from "decimal.js";
 
 export const Expenses = () => {
   const queryClient = useQueryClient();
@@ -11,8 +13,10 @@ export const Expenses = () => {
     queryFn: ExpenseService.getAll,
   });
 
-  const onErrorHandler = () => (_error, _expense, context) =>
+  const onErrorHandler = () => (_error, _expense, context) => {
+    console.log({ _error, _expense, context });
     queryClient.setQueryData(["expenses"], context?.previousExpenses);
+  };
   const onSettledHandler = () =>
     queryClient.invalidateQueries({ queryKey: ["expenses"] });
 
@@ -25,10 +29,11 @@ export const Expenses = () => {
     mutationFn: ExpenseService.create,
     onMutate: async (newExpense) => {
       const previousExpenses = await getPreviousExpenses();
-      queryClient.setQueryData(["expenses"], (oldExpenses: Expense[]) => [
-        ...(oldExpenses ?? []),
-        newExpense,
-      ]);
+      queryClient.setQueryData(
+        ["expenses"],
+        (response: GetAllExpensesResponse) =>
+          new GetAllExpensesResponse([...(response.expenses ?? []), newExpense])
+      );
       return { previousExpenses };
     },
     onError: onErrorHandler,
@@ -40,10 +45,19 @@ export const Expenses = () => {
     onMutate: async (updatedExpense) => {
       const previousExpenses = await getPreviousExpenses();
 
-      queryClient.setQueryData(["expenses"], (oldExpenses: Expense[]) =>
-        oldExpenses?.map((expense) =>
-          expense.id === updatedExpense.id ? updatedExpense : expense
-        )
+      updatedExpense.total = updatedExpense.percentageMarkup
+        .dividedBy(100)
+        .times(updatedExpense.price)
+        .add(updatedExpense.price);
+
+      queryClient.setQueryData(
+        ["expenses"],
+        (response: GetAllExpensesResponse) =>
+          new GetAllExpensesResponse(
+            response.expenses?.map((expense: Expense) =>
+              expense.id === updatedExpense.id ? updatedExpense : expense
+            )
+          )
       );
 
       return { previousExpenses };
@@ -57,8 +71,12 @@ export const Expenses = () => {
     onMutate: async (id) => {
       const previousExpenses = getPreviousExpenses();
 
-      queryClient.setQueryData(["expenses"], (oldExpense: Expense[]) =>
-        oldExpense?.filter((expense) => expense.id !== id)
+      queryClient.setQueryData(
+        ["expenses"],
+        (response: GetAllExpensesResponse) =>
+          new GetAllExpensesResponse(
+            response.expenses?.filter((expense: Expense) => expense.id !== id)
+          )
       );
 
       return { previousExpenses };
@@ -70,10 +88,10 @@ export const Expenses = () => {
   const addExpense = async () => {
     const expense = {
       id: Date.now(),
-      name: `Expense ${(query?.data?.length ?? 0) + 1}`,
-      percentageMarkup: 0,
-      price: 0,
-      total: 0,
+      name: `Expense ${(query?.data?.expenses?.length ?? 0) + 1}`,
+      percentageMarkup: new Decimal(0),
+      price: new Decimal(0),
+      total: new Decimal(0),
     } as Expense;
 
     createMutation.mutate(expense);
@@ -93,13 +111,13 @@ export const Expenses = () => {
 
           <div className="flex flex-col gap-y-4">
             <div className="hidden grid-cols-5 gap-4 sm:grid">
-              <div className="w-1/4">Name</div>
-              <div className="w-1/4">Price</div>
-              <div className="w-1/4">Markup</div>
-              <div className="w-1/4">Total</div>
+              <div className="text-center">Name</div>
+              <div className="text-center">Price</div>
+              <div className="text-center">Markup</div>
+              <div className="text-center">Total</div>
               <div className=""></div>
             </div>
-            {query?.data?.map((expense) => (
+            {query?.data?.expenses?.map((expense) => (
               <ExpenseRow
                 key={expense.id}
                 expense={expense}
@@ -110,7 +128,7 @@ export const Expenses = () => {
           </div>
 
           <div className="text-sm place-self-end sm:text-base">
-            Total Value: 420
+            Grand Total: {query?.data?.total?.toFixed(2)} €
           </div>
         </div>
       </div>
