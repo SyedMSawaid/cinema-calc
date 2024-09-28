@@ -13,10 +13,8 @@ export const Expenses = () => {
     queryFn: ExpenseService.getAll,
   });
 
-  const onErrorHandler = () => (_error, _expense, context) => {
-    console.log({ _error, _expense, context });
+  const onErrorHandler = (error, expense, context) =>
     queryClient.setQueryData(["expenses"], context?.previousExpenses);
-  };
   const onSettledHandler = () =>
     queryClient.invalidateQueries({ queryKey: ["expenses"] });
 
@@ -69,7 +67,7 @@ export const Expenses = () => {
   const deleteMutation = useMutation({
     mutationFn: ExpenseService.delete,
     onMutate: async (id) => {
-      const previousExpenses = getPreviousExpenses();
+      const previousExpenses = await getPreviousExpenses();
 
       queryClient.setQueryData(
         ["expenses"],
