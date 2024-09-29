@@ -6,6 +6,7 @@ using CinemaCalc.Application.Expenses.Queries.GetAllExpenses;
 using CinemaCalc.Application.Expenses.Queries.GetExpenseById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace CinemaCalc.WebApi.Controllers;
 
@@ -19,35 +20,40 @@ public class ExpenseController : BaseController
     }
 
     [HttpPost(Name = "CreateExpense")]
+    [SwaggerResponse(StatusCodes.Status200OK, "returns created expense object", typeof(ExpenseDto))]
     public async Task<IActionResult> Create([FromBody] NewExpenseDto expenseDto)
     {
         var expense = await _mediator.Send(new CreateExpenseCommand(expenseDto));
         return Ok(expense);
     }
 
-    // TODO: add response types.
     [HttpGet(Name = "GetAllExpenses")]
+    [SwaggerResponse(StatusCodes.Status200OK, "returns list of expenses and their total amount",
+        typeof(GetAllExpensesResponse))]
     public async Task<IActionResult> GetAll()
     {
         var expenses = await _mediator.Send(new GetAllExpensesCommand());
         return Ok(expenses);
     }
 
-    [HttpGet("{id}", Name = "GetExpenseById")]
+    [HttpGet("{id:int}", Name = "GetExpenseById")]
+    [SwaggerResponse(StatusCodes.Status200OK, "returns expense object by ID", typeof(ExpenseDto))]
     public async Task<IActionResult> GetById(int id)
     {
         var expense = await _mediator.Send(new GetExpenseByIdCommand(id));
         return Ok(expense);
     }
 
-    [HttpPut("{id}", Name = "UpdateExpense")]
+    [HttpPut("{id:int}", Name = "UpdateExpense")]
+    [SwaggerResponse(StatusCodes.Status200OK, "returns updated expense object", typeof(ExpenseDto))]
     public async Task<IActionResult> Update(int id, [FromBody] NewExpenseDto expenseDto)
     {
         var expense = await _mediator.Send(new UpdateExpenseCommand(id, expenseDto));
         return Ok(expense);
     }
 
-    [HttpDelete("{id}", Name = "DeleteExpense")]
+    [HttpDelete("{id:int}", Name = "DeleteExpense")]
+    [SwaggerResponse(StatusCodes.Status200OK, "returns deleted expense object", typeof(ExpenseDto))]
     public async Task<IActionResult> Delete(int id)
     {
         var expense = await _mediator.Send(new DeleteExpenseCommand(id));
