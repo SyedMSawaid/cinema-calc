@@ -8,6 +8,6 @@ public class GetExpenseByIdCommand : IRequest<ExpenseDto>
     {
         Id = id;
     }
-    
+
     public int Id { get; set; }
 }

@@ -7,8 +7,8 @@ namespace CinemaCalc.Application.Expenses.Commands.CreateExpense;
 
 public class CreateExpenseCommandHandler : IRequestHandler<CreateExpenseCommand, ExpenseDto>
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
     public CreateExpenseCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
@@ -19,10 +19,10 @@ public class CreateExpenseCommandHandler : IRequestHandler<CreateExpenseCommand,
     public async Task<ExpenseDto> Handle(CreateExpenseCommand request, CancellationToken cancellationToken)
     {
         var expense = Expense.Create(request.Dto.Name, request.Dto.Price, request.Dto.PercentageMarkup);
-        
+
         var newExpense = await _unitOfWork.ExpenseRepository.AddAsync(expense);
         await _unitOfWork.CompleteAsync();
-        
+
         var expenseDto = _mapper.Map<ExpenseDto>(newExpense.Entity);
         return expenseDto;
     }

@@ -5,7 +5,7 @@ namespace CinemaCalc.Application.Exceptions.Expenses;
 
 public class ExpenseNotFoundException : EntityNotFoundException
 {
-    public ExpenseNotFoundException(object key) 
+    public ExpenseNotFoundException(object key)
         : base(nameof(Expense), key, $"{nameof(Expense)} with ID: {key} not found.")
     {
     }

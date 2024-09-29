@@ -9,7 +9,7 @@ public class UpdateExpenseCommand : IRequest<ExpenseDto>
         Id = id;
         Dto = dto;
     }
-    
+
     public int Id { get; set; }
     public NewExpenseDto Dto { get; set; }
 }

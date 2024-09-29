@@ -8,6 +8,6 @@ public class CreateExpenseCommand : IRequest<ExpenseDto>
     {
         Dto = dto;
     }
-    
+
     public NewExpenseDto Dto { get; set; }
 }

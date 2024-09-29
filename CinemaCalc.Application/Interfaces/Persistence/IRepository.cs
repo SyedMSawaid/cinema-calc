@@ -1,4 +1,3 @@
-
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace CinemaCalc.Application.Interfaces.Persistence;
