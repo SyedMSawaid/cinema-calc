@@ -1,0 +1,54 @@
+services:
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: CinemaCalc
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - cinemacalc-network
+
+  backend:
+    build:
+      context: . # Set the build context to the project root
+      dockerfile: Dockerfile # Dockerfile is located in the root directory
+    container_name: cinemacalc-backend
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Host=db;Database=CinemaCalc;Username=postgres;Password=mysecretpassword"
+    ports:
+      - "5157:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - cinemacalc-network
+
+  frontend:
+    build: ./ClientApp/CinemaCalc
+    container_name: cinemacalc-frontend
+    environment:
+      VITE_API_URL: "http://localhost:5157/api"
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - cinemacalc-network
+
+volumes:
+  db-data:
+
+networks:
+  cinemacalc-network:
+    driver: bridge
