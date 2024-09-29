@@ -2,7 +2,7 @@
 
 Coding Assignment for "Working Student Full Stack Developer" position at [Those Youngbloods GmbH](https://thoseyoungbloods.com). This project is build with **.NET**, **React with TypeScript** and **PostgreSQL**.
 
-## How to run the project locally?
+## 01. How to run the project locally?
 
 To run this project locally, kindly follow the steps for each project.
 
@@ -41,7 +41,7 @@ dotnet run
 
 The front-end is build with Node `v20.13.1` and React with TypeScript. It lives under the `ClientApp/CinemaCalc` folder.
 
-Create an `.env` file at the root of the front-end project (`ClientApp/CinemaCalc`) with having `VITE_API_URL` as key and back-end API server as value. (see `.env.example` at `ClientApp/CinemaCalc/.env.example`)
+Create an `.env` file at the root of the front-end project (`ClientApp/CinemaCalc`) with having `VITE_API_URL` as key and back-end API server URL as value. (see `.env.example` at `ClientApp/CinemaCalc/.env.example`)
 
 Run the following command to install all the required packages.
 
@@ -59,6 +59,8 @@ npm run dev
 
 The backend is specifically structured using clean code architecture. I tried to create the same for the front-end but couldn't due to lack of time.
 
+![screenshot](docs/clean-architecture.png)
+
 On backend, all the operations are divided into commands and queries and are called through MediatR. This ensures that the application isn't coupled to the API layer.
 
 ## 03. How do you manage state in your application? Why did you choose this solution?
@@ -73,13 +75,21 @@ For precise number calculations, I used `decimal` on the C# layer and `numeric(1
 
 Since TypeScript doesn't support decimal natively, I have to reach out for a library called `decimal.js` to perform precise number calculations.
 
-## 05. What „tasks“ did you have on your mind? How did you break down the different deliverables?
+## 05. What "tasks" did you have on your mind? How did you break down the different deliverables?
 
 The first task I had in mind was to create the basic clean architecture, that is maintainable, for the backend as well as the frontend.
 
 After that, I created a proof of concept to make sure everything works fine before moving on to styling.
 
-## 06. Use the readme as a notepad to make us understand your thinking.
+## 06. Use the readme as a notepad to make us understand your thinking
+
+I started with a basic understanding of the what the project was about. For that, I created an account on the CinemaCalc application and see what I will working on.
+
+Then I first started with creating the basic architecture on the backend. Add functionality to it and run a proof of concept. Once it was working, I moved to the front-end. Since I already had a rough sketch of what I was building, I created a proof of concept on the front-end. Setup the HTTP Client and made calls to the backend server to make sure everything works fine.
+
+Once it was working, I added optimistic updates and polished the UI and added precise calculations to the front-end to make sure everything is fine.
+
+Once all the tasks were completed, I cleaned up the code and made sure it follows all the required coding conventions.
 
 ---
 
