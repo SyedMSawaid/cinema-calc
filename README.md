@@ -65,6 +65,8 @@ The backend is specifically structured using clean code architecture. I tried to
 
 On backend, all the operations are divided into commands and queries and are called through MediatR. This ensures that the application isn't coupled to the presentation layer.
 
+In future if we want to add another presentation layer, say desktop UI with C#, we can easily add that to our solution since the application layer and the core of application is independent of any presentation layer. It can easily be consumed on the desktop application without re-inventing the wheel.
+
 ## 03. How do you manage state in your application? Why did you choose this solution?
 
 For managing state on the front-end, I chose [React Query](https://tanstack.com/query/latest/docs/framework/react/overview) for its nice and easy to use interface querying and mutation data. Using this library, I was able to easily achieve optimistic updates while the data was saved and verified on the backend.
