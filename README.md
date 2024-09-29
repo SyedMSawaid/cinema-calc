@@ -1,6 +1,6 @@
 # CinemaCalc
 
-Assignment project for Those YoungBloods GmbH. This project is build with .NET, React with TypeScript and PostgreSQL.
+Coding Assignment for "Working Student Full Stack Developer" position at [Those Youngbloods GmbH](https://thoseyoungbloods.com). This project is build with **.NET**, **React with TypeScript** and **PostgreSQL**.
 
 ## How to run the project locally?
 
@@ -8,9 +8,9 @@ To run this project locally, kindly follow the steps for each project.
 
 ### Back-End
 
-The back-end is build with .NET version `8.0.401`. Make sure your .NET version is compatible with this version.
+The back-end is build with .NET version `8.0.401`. Make sure your .NET version is compatible with it.
 
-Edit the database connection string and point it to the right server with credentials. Since this project is build with PostgreSQL, make sure the server exists. You can find the `DefaultConnection` under `ConnectionStrings` in `CinemaCalc/CinemaCalc.WebApi/appsettings.json`.
+Edit the database connection string and point it to the right **Postgres** server with credentials. You can find the `DefaultConnection` under `ConnectionStrings` in `CinemaCalc.WebApi/appsettings.json`.
 
 Once the connection string is pointing to the right database server, go to the root of the project and run the following command to apply migrations.
 
@@ -18,19 +18,42 @@ Once the connection string is pointing to the right database server, go to the r
 dotnet ef database update --project CinemaCalc.Persistence/CinemaCalc.Persistence.csproj --startup-project CinemaCalc.WebApi/CinemaCalc.WebApi.csproj --context CinemaCalc.Persistence.Data.ApplicationDbContext --configuration Debug 20240928031710_AddedPrecision
 ```
 
-After that, go the `CinemaCalc/CinemaCalc.WebApi` project and run the `dotnet run` command to start the server.
+---
+**NOTE: If the above commands fails, you can use the JetBrain's Rider UI to run the migrations.**
+
+Right click on the `CinemaCalc.Persistence` project and go through the following steps.
+
+![screenshot](docs/context-menu.png)
+
+![screenshot](docs/configuration.png)
+
+And then hit `OK`.
+
+---
+
+After that, go the `CinemaCalc.WebApi` project and run the following command to start the server.
+
+```bash
+dotnet run
+```
 
 ### Front-End
 
-The front-end is build with Node `v20.13.1` and React with TypeScript.
+The front-end is build with Node `v20.13.1` and React with TypeScript. It lives under the `ClientApp/CinemaCalc` folder.
 
-For the front-end, go to the `CinemaCalc/ClientApp/CinemaCalc` folder.
+Create an `.env` file at the root of the front-end project (`ClientApp/CinemaCalc`) with having `VITE_API_URL` as key and back-end API server as value. (see `.env.example` at `ClientApp/CinemaCalc/.env.example`)
 
-Create an `.env` file with `VITE_API_URL` key having the value of the back-end API server. (see `.env.example` for an example)
+Run the following command to install all the required packages.
 
-Run `npm i` to install all the required packages.
+```bash
+npm i
+```
 
-Run `npm run dev` to run the application.
+After that, run the following command to run the application.
+
+```bash
+npm run dev
+```
 
 ## 02. What is the overall structure of your code?
 
@@ -57,3 +80,7 @@ The first task I had in mind was to create the basic clean architecture, that is
 After that, I created a proof of concept to make sure everything works fine before moving on to styling.
 
 ## 06. Use the readme as a notepad to make us understand your thinking.
+
+---
+
+Made with ❤️ by [Syed Muhammad Sawaid](https://syedmsawaid.com) for Those Youngbloods.
