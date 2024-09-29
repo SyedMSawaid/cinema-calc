@@ -1,5 +1,21 @@
 # CinemaCalc
 
+## **Table of Contents**
+
+1. [Overview](#overview)
+2. [How to run the project locally?](#01-how-to-run-the-project-locally)
+  - [A. Docker](#a-docker)
+  - [B. Manually](#b-manually)
+    - [Back-end](#back-end)
+    - [Front-end](#front-end)
+3. [What is the overall structure of your code?](#02-what-is-the-overall-structure-of-your-code)
+4. [How do you manage state in your application? Why did you choose this solution?](#03-how-do-you-manage-state-in-your-application-why-did-you-choose-this-solution)
+5. [How does your approach for precise number calculations work?](#04-how-does-your-approach-for-precise-number-calculations-work)
+6. [What "tasks" did you have on your mind? How did you break down the different deliverables?](#05-what-tasks-did-you-have-on-your-mind-how-did-you-break-down-the-different-deliverables)
+7. [Use the readme as a notepad to make us understand your thinking](#06-use-the-readme-as-a-notepad-to-make-us-understand-your-thinking)
+
+## Overview
+
 Coding Assignment for "Working Student Full Stack Developer" position at [Those Youngbloods GmbH](https://thoseyoungbloods.com). This project is build with **.NET**, **React with TypeScript** and **PostgreSQL**.
 
 ![UI](/docs/ui.png)
