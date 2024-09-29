@@ -22,7 +22,7 @@ public class Program
 
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
         builder.Services.AddScoped<IExpenseRepository, ExpenseRepository>();
-        builder.Services.AddMediatR(cfg => 
+        builder.Services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssemblyContaining<GetAllExpensesCommand>());
         builder.Services.AddAutoMapper(typeof(ExpenseMappers));
 
