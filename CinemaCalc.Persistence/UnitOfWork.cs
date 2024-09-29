@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CinemaCalc.Persistence;
 
-
 public class UnitOfWork : IUnitOfWork, IDisposable
 {
     private readonly ApplicationDbContext _applicationDbContext;
@@ -12,20 +11,20 @@ public class UnitOfWork : IUnitOfWork, IDisposable
 
     public UnitOfWork(
         ApplicationDbContext applicationDbContext,
-       IExpenseRepository expenseRepository
+        IExpenseRepository expenseRepository
     )
     {
         _applicationDbContext = applicationDbContext;
         ExpenseRepository = expenseRepository;
     }
 
-    public IExpenseRepository ExpenseRepository { get; }
-
     public void Dispose()
     {
         _applicationDbContext.Dispose();
         GC.SuppressFinalize(this);
     }
+
+    public IExpenseRepository ExpenseRepository { get; }
 
     public Task<int> CompleteAsync()
     {

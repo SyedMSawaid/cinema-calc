@@ -4,6 +4,7 @@ using CinemaCalc.Persistence.Data;
 
 namespace CinemaCalc.Persistence.Repositories;
 
-public class ExpenseRepository(ApplicationDbContext applicationDbContext) : Repository<Expense>(applicationDbContext), IExpenseRepository
+public class ExpenseRepository(ApplicationDbContext applicationDbContext)
+    : Repository<Expense>(applicationDbContext), IExpenseRepository
 {
 }

@@ -14,9 +14,4 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
 
         CommonConfiguration.ApplyConfigurations(modelBuilder);
     }
-    
-    public void InitializeDatabase()
-    {
-        Database.EnsureCreated();  // This creates the database and schema
-    }
 }

@@ -6,7 +6,8 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace CinemaCalc.Persistence.Repositories;
 
-public abstract class Repository<TEntity>(ApplicationDbContext applicationDbContext) : IRepository<TEntity> where TEntity : BaseEntity
+public abstract class Repository<TEntity>(ApplicationDbContext applicationDbContext)
+    : IRepository<TEntity> where TEntity : BaseEntity
 {
     private readonly ApplicationDbContext _applicationDbContext = applicationDbContext;
 
