@@ -9,12 +9,12 @@ public class Expense : BaseEntity
 
     public static Expense Create(string name, decimal price, decimal percentageMarkup)
     {
-        return new Expense()
+        return new Expense
         {
             Name = name,
             Price = price,
             PercentageMarkup = percentageMarkup,
-            Total = ((percentageMarkup / 100) * price) + price
+            Total = percentageMarkup / 100 * price + price
         };
     }
 }
