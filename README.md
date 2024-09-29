@@ -2,6 +2,8 @@
 
 Coding Assignment for "Working Student Full Stack Developer" position at [Those Youngbloods GmbH](https://thoseyoungbloods.com). This project is build with **.NET**, **React with TypeScript** and **PostgreSQL**.
 
+![UI](/docs/ui.png)
+
 ## 01. How to run the project locally?
 
 To run this project locally, kindly follow the steps for each project.
@@ -59,37 +61,56 @@ npm run dev
 
 The backend is specifically structured using clean code architecture. I tried to create the same for the front-end but couldn't due to lack of time.
 
-![screenshot](docs/clean-architecture.png)
+![diagram](docs/clean-architecture.png)
 
-On backend, all the operations are divided into commands and queries and are called through MediatR. This ensures that the application isn't coupled to the API layer.
+On backend, all the operations are divided into commands and queries and are called through MediatR. This ensures that the application isn't coupled to the presentation layer.
 
 ## 03. How do you manage state in your application? Why did you choose this solution?
 
-For managing state on the front-end, I chose React Query for its easy interface and callbacks when something goes wrong. Using this library, I was able to easily achieve optimistic updates while the data was verified and saved on the backend.
+For managing state on the front-end, I chose [React Query](https://tanstack.com/query/latest/docs/framework/react/overview) for its nice and easy to use interface querying and mutation data. Using this library, I was able to easily achieve optimistic updates while the data was saved and verified on the backend.
 
 In case of any error on the backend, it will quickly revert to its previous state, making sure the client is in sync with the backend server.
 
+If I would have used any other state management solutions, I would have to manually set this up. This would have taken more time and could've introduced bugs in my software.
+
 ## 04. How does your approach for precise number calculations work?
 
-For precise number calculations, I used `decimal` on the C# layer and `numeric(18,2)` on the database layer.
+For precise number calculations on the backend, I used `decimal` on the C# layer and `numeric(18,2)` on the database layer. The `decimal` type is ideal for financial calculations as it represent number as it is. while the `numeric(18,2)` really locks it down to two decimal places.
 
-Since TypeScript doesn't support decimal natively, I have to reach out for a library called `decimal.js` to perform precise number calculations.
+Since TypeScript doesn't support decimal natively, I have to reach out for a library called "[decimal.js](https://github.com/MikeMcl/decimal.js)" to perform precise number calculations.
 
 ## 05. What "tasks" did you have on your mind? How did you break down the different deliverables?
 
-The first task I had in mind was to create the basic clean architecture, that is maintainable, for the backend as well as the frontend.
+When I read the project description, I started thinking about how I want to approach this project.
 
-After that, I created a proof of concept to make sure everything works fine before moving on to styling.
+My focus was on creating a beautiful and usable interface while following the principles of clean architecture (at least on the backend).
+
+I divided my tasks into some structure like this;
+
+- Create a clean architecture proof of concept on the backend.
+- Create a proof of concept front-end and connect the front-end with the backend.
+- Implement all the CRUD functionality on the back-end.
+- Implement all the CRUD functionality on the front-end and connect it to the backend.
+- Add precise calculations to the backend, and the later on to the front-end.
+- Style front-end and make it easy on eye.
+- Clean up the code and remove any duplication.
+- Write documentation on how to use this project.
 
 ## 06. Use the readme as a notepad to make us understand your thinking
 
-I started with a basic understanding of the what the project was about. For that, I created an account on the CinemaCalc application and see what I will working on.
+I started with a basic understanding of the what the project was about. For that, I created an account on the CinemaCalc application and see what I will be working on.
 
-Then I first started with creating the basic architecture on the backend. Add functionality to it and run a proof of concept. Once it was working, I moved to the front-end. Since I already had a rough sketch of what I was building, I created a proof of concept on the front-end. Setup the HTTP Client and made calls to the backend server to make sure everything works fine.
+Then I first started with creating the basic architecture on the backend. Add functionality to it and ran a proof of concept. Once it was working, I moved to the front-end. Since I already had a rough sketch of what I was building, I created a proof of concept on the front-end. Setup the HTTP Client and made calls to the backend server to make sure everything works fine.
 
-Once it was working, I added optimistic updates and polished the UI and added precise calculations to the front-end to make sure everything is fine.
+Once it was working, I added optimistic updates and polished the UI and added precise calculations to the front-end.
 
-Once all the tasks were completed, I cleaned up the code and made sure it follows all the required coding conventions.
+Once all the tasks were completed, I cleaned up the code and made sure it follows all the common coding conventions.
+
+I used my notebook to keep track of what I want to implement on top of the basic functionality. Here are a couple of pictures of my notes.
+
+![diary 1](/docs/first.png)
+
+![diary 2](/docs/second.png)
 
 ---
 
