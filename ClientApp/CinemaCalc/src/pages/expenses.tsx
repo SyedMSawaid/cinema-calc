@@ -127,7 +127,7 @@ export const Expenses = () => {
   return (
     <>
       <div className="flex items-center justify-center w-full h-full">
-        <div className="flex flex-col max-w-screen-lg py-10 gap-y-12 grow">
+        <div className="flex flex-col max-w-screen-lg px-2 py-10 gap-y-12 grow">
           <div className="px-2 pb-56 bg-white shadow-2xl md:px-10 rounded-xl">
             <div className="flex flex-col items-center justify-center py-16 gap-y-4">
               <h1 className="text-2xl font-bold text-center">Cinema Calc</h1>
@@ -173,6 +173,19 @@ export const Expenses = () => {
               </div>
             </div>
           </div>
+
+          <footer className="text-center">
+            Made with ❤️ by{" "}
+            <a
+              href="https://syedmsawaid.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline"
+            >
+              Syed Muhammad Sawaid
+            </a>{" "}
+            for Those Youngbloods GmbH.
+          </footer>
         </div>
       </div>
     </>
