@@ -6,7 +6,7 @@ Coding Assignment for "Working Student Full Stack Developer" position at [Those 
 
 ## 01. How to run the project locally?
 
-To run this project locally, kindly follow the steps for each project.
+You can use either the Docker Compose approach for a single command deployment, or you can manually set everything up.
 
 ### A. Docker
 
@@ -15,6 +15,8 @@ To run the project, simply go to the root of the project, and run either `docker
 Once the back-end is up and running, go to `localhost:3000` to use the application.
 
 ### B. Manually
+
+To run this project locally, kindly follow the steps for each project.
 
 #### Back-End
 
