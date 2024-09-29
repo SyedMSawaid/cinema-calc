@@ -116,4 +116,4 @@ I used my notebook to keep track of what I want to implement on top of the basic
 
 ---
 
-Made with ❤️ by [Syed Muhammad Sawaid](https://syedmsawaid.com) for Those Youngbloods.
+Made with ❤️ by [Syed Muhammad Sawaid](https://syedmsawaid.com) for [Those Youngbloods GmbH](https://thoseyoungbloods.com).
