@@ -4,15 +4,20 @@ import { Button, ExpenseRow } from "../components";
 import { GetAllExpensesResponse } from "../data/dtos";
 import { Expense } from "../data/models";
 import { ExpenseService } from "../services";
+import { useEffect, useState } from "react";
+import { cn } from "../helpers";
 
 export const Expenses = () => {
   const queryClient = useQueryClient();
+  const [animate, setAnimate] = useState(false);
 
   const query = useQuery({
     queryKey: ["expenses"],
     queryFn: ExpenseService.getAll,
   });
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const onErrorHandler = (error, expense, context) =>
     queryClient.setQueryData(["expenses"], context?.previousExpenses);
   const onSettledHandler = () =>
@@ -20,18 +25,31 @@ export const Expenses = () => {
 
   const getPreviousExpenses = async () => {
     await queryClient.cancelQueries({ queryKey: ["expenses"] });
-    return queryClient.getQueryData<Expense[]>(["expenses"]);
+    return queryClient.getQueryData<GetAllExpensesResponse>(["expenses"]);
+  };
+
+  const shouldAnimate = (
+    prev?: GetAllExpensesResponse,
+    curr?: GetAllExpensesResponse
+  ) => {
+    if (prev?.total?.toString() !== curr?.total?.toString()) {
+      setAnimate(true);
+    }
   };
 
   const createMutation = useMutation({
     mutationFn: ExpenseService.create,
     onMutate: async (newExpense) => {
       const previousExpenses = await getPreviousExpenses();
-      queryClient.setQueryData(
+
+      const response = queryClient.setQueryData(
         ["expenses"],
         (response: GetAllExpensesResponse) =>
           new GetAllExpensesResponse([...(response.expenses ?? []), newExpense])
       );
+
+      shouldAnimate(previousExpenses, response as GetAllExpensesResponse);
+
       return { previousExpenses };
     },
     onError: onErrorHandler,
@@ -48,7 +66,7 @@ export const Expenses = () => {
         .times(updatedExpense.price)
         .add(updatedExpense.price);
 
-      queryClient.setQueryData(
+      const response = queryClient.setQueryData(
         ["expenses"],
         (response: GetAllExpensesResponse) =>
           new GetAllExpensesResponse(
@@ -57,6 +75,8 @@ export const Expenses = () => {
             )
           )
       );
+
+      shouldAnimate(previousExpenses, response as GetAllExpensesResponse);
 
       return { previousExpenses };
     },
@@ -69,13 +89,15 @@ export const Expenses = () => {
     onMutate: async (id) => {
       const previousExpenses = await getPreviousExpenses();
 
-      queryClient.setQueryData(
+      const response = queryClient.setQueryData(
         ["expenses"],
         (response: GetAllExpensesResponse) =>
           new GetAllExpensesResponse(
             response.expenses?.filter((expense: Expense) => expense.id !== id)
           )
       );
+
+      shouldAnimate(previousExpenses, response as GetAllExpensesResponse);
 
       return { previousExpenses };
     },
@@ -94,6 +116,13 @@ export const Expenses = () => {
 
     createMutation.mutate(expense);
   };
+
+  useEffect(() => {
+    if (animate) {
+      const timer = setTimeout(() => setAnimate(false), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [animate]);
 
   return (
     <>
@@ -134,7 +163,14 @@ export const Expenses = () => {
 
             <div className="flex items-center justify-center py-10 text-sm sm:text-base gap-x-4">
               <div className="text-6xl text-bold">&Sigma;</div>
-              <div className="text-3xl">{query?.data?.total?.toFixed(2)} €</div>
+              <div
+                className={cn(
+                  "text-3xl",
+                  animate && "animate__animated animate__pulse animate__faster"
+                )}
+              >
+                {query?.data?.total?.toFixed(2)} €
+              </div>
             </div>
           </div>
         </div>
