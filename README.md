@@ -8,7 +8,15 @@ Coding Assignment for "Working Student Full Stack Developer" position at [Those 
 
 To run this project locally, kindly follow the steps for each project.
 
-### Back-End
+### A. Docker
+
+To run the project, simply go to the root of the project, and run either `docker-compose up` or `docker compose up` depending on your version.
+
+Once the back-end is up and running, go to `localhost:3000` to use the application.
+
+### B. Manually
+
+#### Back-End
 
 The back-end is build with .NET version `8.0.401`. Make sure your .NET version is compatible with it.
 
@@ -39,7 +47,7 @@ After that, go the `CinemaCalc.WebApi` project and run the following command to 
 dotnet run
 ```
 
-### Front-End
+#### Front-End
 
 The front-end is build with Node `v20.13.1` and React with TypeScript. It lives under the `ClientApp/CinemaCalc` folder.
 
