@@ -63,13 +63,13 @@ The backend is specifically structured using clean code architecture. I tried to
 
 ![diagram](docs/clean-architecture.png)
 
-On backend, all the operations are divided into commands and queries and are called through MediatR. This ensures that the application isn't coupled to the presentation layer.
+On backend, all the operations are divided into commands and queries and are called through [MediatR](https://github.com/jbogard/MediatR). This ensures that the application isn't coupled to the presentation layer.
 
 In future if we want to add another presentation layer, say desktop UI with C#, we can easily add that to our solution since the application layer and the core of application is independent of any presentation layer. It can easily be consumed on the desktop application without re-inventing the wheel.
 
 ## 03. How do you manage state in your application? Why did you choose this solution?
 
-For managing state on the front-end, I chose [React Query](https://tanstack.com/query/latest/docs/framework/react/overview) for its nice and easy to use interface querying and mutation data. Using this library, I was able to easily achieve optimistic updates while the data was saved and verified on the backend.
+For managing state on the front-end, I chose [React Query](https://tanstack.com/query/latest/docs/framework/react/overview) for its nice and easy to use interface for querying and mutating data. Using this library, I was easily able to achieve optimistic updates while the data was saved and verified on the backend.
 
 In case of any error on the backend, it will quickly revert to its previous state, making sure the client is in sync with the backend server.
 
@@ -94,19 +94,19 @@ I divided my tasks into some structure like this;
 - Implement all the CRUD functionality on the back-end.
 - Implement all the CRUD functionality on the front-end and connect it to the backend.
 - Add precise calculations to the backend, and the later on to the front-end.
-- Style front-end and make it easy on eye.
+- Style front-end and make it easy on the eye.
 - Clean up the code and remove any duplication.
 - Write documentation on how to use this project.
 
 ## 06. Use the readme as a notepad to make us understand your thinking
 
-I started with a basic understanding of the what the project was about. For that, I created an account on the CinemaCalc application and see what I will be working on.
+I started with a basic understanding of the what the project was about. For that, I created an account on the [CinemaCalc](http://cinemacalc.com) application and see what I will be working on.
 
-Then I first started with creating the basic architecture on the backend. Add functionality to it and ran a proof of concept. Once it was working, I moved to the front-end. Since I already had a rough sketch of what I was building, I created a proof of concept on the front-end. Setup the HTTP Client and made calls to the backend server to make sure everything works fine.
+Then I first started with creating the basic architecture on the backend. Add functionality to it and ran a proof of concept. Once it was working, I moved to the front-end. Since I already had a rough sketch of what I was building, I created a proof of concept on the front-end, setup the HTTP Client and made calls to the backend server to make sure everything works fine.
 
 Once it was working, I added optimistic updates and polished the UI and added precise calculations to the front-end.
 
-Once all the tasks were completed, I cleaned up the code and made sure it follows all the common coding conventions.
+Once all the tasks were completed, I cleaned up the code and made sure it follows all the recommended coding conventions.
 
 I used my notebook to keep track of what I want to implement on top of the basic functionality. Here are a couple of pictures of my notes.
 
